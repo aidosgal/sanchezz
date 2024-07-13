@@ -9,6 +9,6 @@ class Handler extends WebhookHandler
 {
     public function start() : void
     {
-        Telegraph::message('Привет');
+        Telegraph::message('Привет')->send();
     }
 }
