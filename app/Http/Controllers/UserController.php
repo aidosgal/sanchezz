@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    protected function __invoke(): mixed
+    public function __invoke(): mixed
     {
         return Inertia::render('Home');
     }
