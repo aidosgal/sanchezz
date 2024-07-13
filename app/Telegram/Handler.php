@@ -13,7 +13,7 @@ class Handler extends WebhookHandler
         Telegraph::message('Привет')->send();
     }
 
-    protected function handleUnkownCommand(Stringable $text): void
+    protected function handleUnknownCommand(Stringable $text): void
     {
         $this->reply('Неизвестная команда');
     }
