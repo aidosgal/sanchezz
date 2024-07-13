@@ -8,9 +8,6 @@
 
 <script>
 export default {
-    mounted() {
-        document.body.style.overflowY = 'hidden';
-    },
     data() {
         return {
             imageUrl: 'https://srv451534.hstgr.cloud/images/backhround.png'
@@ -23,6 +20,8 @@ export default {
 body {
     margin: 0;
     padding: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
     background: url('https://srv451534.hstgr.cloud/images/backhround.png') no-repeat center center fixed;
     background-size: cover;
 }
