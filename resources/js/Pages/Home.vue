@@ -1,6 +1,9 @@
 <template>
-    <div class="w-full h-screen bg-no-repeat bg-cover text-white text-center" :style="{ backgroundImage: 'url(' + imageUrl + ')' }">
-       Home
+    <div class="w-full h-screen relative">
+        <img class="absolute inset-0 object-cover w-full h-full" :src="imageUrl" alt="Background Image">
+        <div class="absolute inset-0 flex items-center justify-center text-white text-center">
+            Home
+        </div>
     </div>
 </template>
 
@@ -15,6 +18,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 
