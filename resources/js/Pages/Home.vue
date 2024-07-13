@@ -8,6 +8,9 @@
 
 <script>
 export default {
+    mounted() {
+        document.body.style.overflowY = 'hidden';
+    },
     data() {
         return {
             imageUrl: 'https://srv451534.hstgr.cloud/images/backhround.png'
