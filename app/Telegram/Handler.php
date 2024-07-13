@@ -6,6 +6,8 @@ use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Support\Stringable;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 
 class Handler extends WebhookHandler
 {
@@ -15,10 +17,13 @@ class Handler extends WebhookHandler
 
         if ($chat instanceof TelegraphChat) {
             Telegraph::chat($chat)
-                ->message('Привет')
+                ->message('Добро пожаловать!')
+                ->keyboard(Keyboard::make()->buttons([
+                    Button::make('Открыть приложение')->webApp('https://srv451534.hstgr.cloud'),
+                ]))
                 ->send();
         } else {
-            $this->reply('Chat not found.');
+            $this->reply('Чат не найден');
         }
     }
 
