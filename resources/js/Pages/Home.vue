@@ -1,12 +1,10 @@
 <template>
-    <div class="w-full h-[80vh] bg-no-repeat bg-cover text-white relative" :style="{ backgroundImage: 'url(' + imageUrl + ')' }">
-        <div class="absolute bottom-10 w-full">
-            <div class="flex w-full">
-                <div class="mx-auto text-center">
-                    <div class="text-center">Login</div>
-                    <div class="text-center">Registration</div>
-                </div>
-            </div>
+    <div>
+        <div class="text-center py-16">
+            Home
+        </div>
+        <div class="fixed inset-x-0 bottom-0 bg-gray-900 text-white py-4 text-center">
+            Footer content
         </div>
     </div>
 </template>
@@ -21,6 +19,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url('https://srv451534.hstgr.cloud/images/backhround.png') no-repeat center center fixed;
+    background-size: cover;
+}
 </style>
 
