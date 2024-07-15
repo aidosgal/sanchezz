@@ -11,4 +11,14 @@ class UserController extends Controller
     {
         return Inertia::render('Home');
     }
+
+    public function login(): mixed
+    {
+        return Inertia::render('Login');
+    }
+
+    public function register(): mixed
+    {
+        return Inertia::render('Register');
+    }
 }
