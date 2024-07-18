@@ -34,6 +34,7 @@
                     :class="buttonClasses"
                     class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
                     :disabled="!isFormValid"
+                    @click="login"
                 >
                     Confirm
                 </button>
@@ -44,10 +45,14 @@
 
 <script>
 export default {
+    props: {
+        flash: Object
+    },
     data() {
         return {
             email: "",
             password: "",
+            error: null,
         };
     },
     computed: {
@@ -60,6 +65,25 @@ export default {
                 : "text-[#656D85] bg-[#292F40]";
         },
     },
+    methods: {
+        async login() {
+            if (this.isFormValid) {
+                try {
+                    const response = await this.$inertia.post('/login', {
+                        email: this.email,
+                        password: this.password
+                    });
+                } catch (error) {
+                    console.error(error);
+                    if (error.response && error.response.data) {
+                        this.error = error.response.data;
+                    } else {
+                        this.error = 'Login failed. Please try again.';
+                    }
+                }
+            }
+        }
+    }
 };
 </script>
 

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -17,8 +21,49 @@ class UserController extends Controller
         return Inertia::render('Login');
     }
 
+    public function authenticate(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/dashboard');
+        }
+
+        return redirect()->route('login')->with('error', 'Invalid credentials');
+    }
+
     public function register(): mixed
     {
         return Inertia::render('Register');
     }
+
+    public function create(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        if ($request->password === $request->confirm_password) {
+            $hashedPassword = Hash::make($request->password);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $hashedPassword,
+            ]);
+
+            Auth::login($user);
+
+            return redirect()->intended('/dashboard');
+        }
+
+        return redirect()->route('register')->with('error', 'Passwords do not match.');
+    }
+
 }
