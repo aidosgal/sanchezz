@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-screen px-5 bg-[url('https://srv451534.hstgr.cloud/images/main.png')] bg-no-repeat bg-contain bg-center"
+        class="h-screen px-5 bg-[url('https://srv451534.hstgr.cloud/images/main.png')] bg-no-repeat bg-cover bg-center"
     >
         <div class="grid grid-cols-3 w-full py-10">
             <div class="flex">

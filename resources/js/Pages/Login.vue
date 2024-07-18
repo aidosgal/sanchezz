@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-screen bg-[url('https://srv451534.hstgr.cloud/images/register.png')] bg-no-repeat bg-contain bg-center"
+        class="flex h-screen bg-[url('https://srv451534.hstgr.cloud/images/register.png')] bg-no-repeat bg-cover bg-center"
     >
         <div class="text-white mx-auto py-10 px-10 w-full">
             <a href="/" class="block text-lg font-bold">Back</a>
