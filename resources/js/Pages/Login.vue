@@ -12,33 +12,34 @@
             <div class="text-center mt-2">
                 Enter your details <br />to login into an account
             </div>
-            <input
-                type="text"
-                v-model="email"
-                class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
-                placeholder="Email"
-            />
-            <input
-                type="password"
-                v-model="password"
-                class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
-                placeholder="Password"
-            />
-            <a
-                href="/register"
-                class="block text-center mt-5 bg-clip-text text-transparent bg-gradient-to-b from-[#FFFFFF] to-[#FFCE50]"
+            <form @submit.prevent="login">
+                <input
+                    type="text"
+                    v-model="email"
+                    class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
+                    placeholder="Email"
+                />
+                <input
+                    type="password"
+                    v-model="password"
+                    class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
+                    placeholder="Password"
+                />
+                <a
+                    href="/register"
+                    class="block text-center mt-5 bg-clip-text text-transparent bg-gradient-to-b from-[#FFFFFF] to-[#FFCE50]"
                 >I don't have an account</a
-            >
-            <div class="w-full fixed left-0 bottom-20 px-10">
-                <button
-                    :class="buttonClasses"
-                    class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
-                    :disabled="!isFormValid"
-                    @click="login"
                 >
-                    Confirm
-                </button>
-            </div>
+                <div class="w-full fixed left-0 bottom-20 px-10">
+                    <button
+                        :class="buttonClasses"
+                        class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
+                        :disabled="!isFormValid"
+                    >
+                        Confirm
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -66,7 +67,7 @@ export default {
         },
     },
     methods: {
-        async login() {
+        async login(event) {
             if (this.isFormValid) {
                 try {
                     const response = await this.$inertia.post('/login', {
