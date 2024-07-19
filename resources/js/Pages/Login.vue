@@ -82,7 +82,23 @@ export default {
                     }
                 }
             }
+        },
+        closeKeyboard(event) {
+            if (!this.$el.contains(event.target)) {
+                if (
+                    document.activeElement &&
+                    (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')
+                ) {
+                    document.activeElement.blur();
+                }
+            }
         }
+    },
+    mounted() {
+        document.addEventListener('click', this.closeKeyboard);
+    },
+    beforeDestroy() {
+        document.removeEventListener('click', this.closeKeyboard);
     }
 };
 </script>
