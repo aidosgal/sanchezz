@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-no-repeat bg-cover bg-center h-screen w-full bg-[url('https://srv451534.hstgr.cloud/images/backhround.png')]"
+        class="bg-no-repeat bg-cover bg-top h-screen w-full bg-[url('https://srv451534.hstgr.cloud/images/backhround.png')]"
     >
         <div class="w-full px-10 fixed bottom-20">
             <div class="flex w-full">

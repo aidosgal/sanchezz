@@ -3,7 +3,7 @@
         class="flex h-screen bg-[url('https://srv451534.hstgr.cloud/images/register.png')] bg-no-repeat bg-cover bg-center"
     >
         <div class="text-white mx-auto py-10 px-10 w-full">
-            <a href="/" class="block text-lg font-bold">Back</a>
+            <a href="/" class="block text-3xl font-bold"><i class="fa-solid text-[#32384D] fa-circle-chevron-left"></i></a>
             <div
                 class="text-center text-4xl font-bold mt-5 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] via-[#FF7D61] to-[#FF0AC9]"
             >
@@ -40,20 +40,34 @@
                     </button>
                 </div>
             </form>
+            <div v-if="Object.keys(errors).length" class="px-5 py-4 radial-gradient-bg w-full mt-3 rounded-lg">
+                <div class="text-center">Alert!</div>
+                <div v-for="(errorMessages, fieldName) in errors" :key="fieldName" class="text-center text-red-500">
+                    <div v-for="(error, index) in errorMessages" :key="index">{{ error }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Inertia } from '@inertiajs/inertia';
+
 export default {
     props: {
-        flash: Object
+        flash: {
+            type: Object,
+            default: () => ({})
+        },
+        errors: {
+            type: Object,
+            default: () => ({})
+        }
     },
     data() {
         return {
             email: "",
             password: "",
-            error: null,
         };
     },
     computed: {
@@ -67,21 +81,14 @@ export default {
         },
     },
     methods: {
-        async login(event) {
+        login() {
             if (this.isFormValid) {
-                try {
-                    const response = await this.$inertia.post('/login', {
-                        email: this.email,
-                        password: this.password
-                    });
-                } catch (error) {
+                Inertia.post('/login', {
+                    email: this.email,
+                    password: this.password
+                }).catch(error => {
                     console.error(error);
-                    if (error.response && error.response.data) {
-                        this.error = error.response.data;
-                    } else {
-                        this.error = 'Login failed. Please try again.';
-                    }
-                }
+                });
             }
         },
         closeKeyboard(event) {
@@ -111,5 +118,8 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
     background-size: cover;
+}
+.radial-gradient-bg {
+    background: radial-gradient(circle, #5E001F 0%, #402937 100%);
 }
 </style>

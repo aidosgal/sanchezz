@@ -1,13 +1,14 @@
 <template>
     <div class="h-screen px-5 bg-[url('https://srv451534.hstgr.cloud/images/main.png')] bg-no-repeat bg-cover bg-center">
-        <div class="grid grid-cols-3 w-full py-10">
+        <div class="grid grid-cols-3 w-full py-10 items-center">
             <div class="flex">
                 <div class="mx-auto rounded bg-[#32384D] p-3">
                     <i class="fas fa-home text-white text-lg mx-auto"></i>
                 </div>
             </div>
             <div>
-                <div class="text-center text-white">{{ user.name }}</div>
+                <div><img class="w-full h-[40px] rounded-full object-cover" :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`" /></div>
+                <div class="text-center text-white mt-[3px] text-sm">{{ user.name }}</div>
             </div>
             <div class="flex">
                 <div class="mx-auto rounded bg-[#32384D] p-3">
@@ -100,7 +101,7 @@ export default {
     },
     methods: {
         async play(event) {
-            // Your play method logic here
+
         },
         closeKeyboard(event) {
             if (!this.$el.contains(event.target)) {

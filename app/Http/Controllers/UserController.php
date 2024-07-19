@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -32,7 +31,7 @@ class UserController extends Controller
             return redirect()->intended('/dashboard');
         }
 
-        return redirect()->route('login')->with('error', 'Invalid credentials');
+        return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
     public function register(): mixed
@@ -56,6 +55,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $hashedPassword,
+                'avatar_url' => "default_avatar.png"
             ]);
 
             Auth::login($user);
@@ -63,7 +63,7 @@ class UserController extends Controller
             return redirect()->intended('/dashboard');
         }
 
-        return redirect()->route('register')->with('error', 'Passwords do not match.');
+        return back()->withErrors(['confirm_password' => 'Passwords do not match.']);
     }
-
 }
+

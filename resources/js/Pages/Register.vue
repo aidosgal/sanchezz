@@ -1,19 +1,13 @@
 <template>
     <div class="flex h-screen bg-[url('https://srv451534.hstgr.cloud/images/register.png')] bg-no-repeat bg-cover bg-center">
         <div class="text-white mx-auto py-10 px-10 w-full">
-            <a href="/" class="block text-lg font-bold">Back</a>
+            <a href="/" class="block text-3xl font-bold"><i class="fa-solid text-[#32384D] fa-circle-chevron-left"></i></a>
             <div class="text-center text-4xl font-bold mt-5 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] via-[#FF7D61] to-[#FF0AC9]">
                 Registration
             </div>
             <div class="text-center mt-2">
                 Enter your details <br />to create an account
             </div>
-            <input
-                type="text"
-                v-model="name"
-                class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
-                placeholder="Name"
-            />
             <input
                 type="text"
                 v-model="email"
@@ -56,7 +50,7 @@
 export default {
     data() {
         return {
-            name: "",
+            name: "nickname",
             email: "",
             password: "",
             confirm_password: "",
