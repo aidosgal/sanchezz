@@ -74,5 +74,33 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6|confirmed',
+            'avatar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+
+        if (!empty($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+
+        if ($request->hasFile('avatar_url')) {
+            $avatarPath = $request->file('avatar_url')->store('images', 'public');
+            $user->avatar_url = $avatarPath;
+        }
+
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profile updated successfully.');
+    }
 }
 

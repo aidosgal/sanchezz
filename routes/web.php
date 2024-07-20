@@ -22,3 +22,4 @@ Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'create']);
 Route::get('/dashboard', [HomeController::class, 'home'])->middleware('auth')->name('dashboard');
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+Route::post('/update', [UserController::class, 'update']);
