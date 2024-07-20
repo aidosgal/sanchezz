@@ -65,5 +65,14 @@ class UserController extends Controller
 
         return back()->withErrors(['confirm_password' => 'Passwords do not match.']);
     }
+
+    public function profile(): mixed
+    {
+        $user = Auth::user();
+
+        return Inertia::render('Profile', [
+            'user' => $user,
+        ]);
+    }
 }
 
