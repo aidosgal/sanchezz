@@ -1,13 +1,13 @@
 <template>
     <div class="h-screen px-5 bg-[url('https://srv451534.hstgr.cloud/images/main.png')] bg-no-repeat bg-cover bg-center">
         <div class="grid grid-cols-3 w-full pt-10 items-center">
-            <div class="flex">
+            <a href="/" class="flex">
                 <div class="mx-auto rounded bg-[#32384D] p-3">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1434 0.152076C11.5088 -0.050692 11.953 -0.050692 12.3184 0.152076L22.0388 5.54699C22.4228 5.76013 22.661 6.1645 22.661 6.60338V17.3932C22.661 17.8321 22.4228 18.2365 22.0388 18.4496L12.3184 23.8445C11.953 24.0473 11.5088 24.0473 11.1434 23.8445L1.42299 18.4496C1.03896 18.2365 0.800791 17.8321 0.800791 17.3932V6.60338C0.800791 6.1645 1.03896 5.76013 1.42299 5.54699L11.1434 0.152076ZM3.2201 7.31444V16.6821L11.7309 21.4057L20.2417 16.6821V7.31444L11.7309 2.59089L3.2201 7.31444ZM11.7309 9.61014C10.2884 9.61014 9.19915 10.7228 9.19915 11.9983C9.19915 13.2738 10.2884 14.3864 11.7309 14.3864C13.1734 14.3864 14.2626 13.2738 14.2626 11.9983C14.2626 10.7228 13.1734 9.61014 11.7309 9.61014ZM6.77984 11.9983C6.77984 9.30112 9.0408 7.19322 11.7309 7.19322C14.421 7.19322 16.682 9.30112 16.682 11.9983C16.682 14.6955 14.421 16.8034 11.7309 16.8034C9.0408 16.8034 6.77984 14.6955 6.77984 11.9983Z" fill="white"/>
                     </svg>
                 </div>
-            </div>
+            </a>
             <a href="/profile">
                 <div><img class="w-full h-[40px] rounded-full object-cover" :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`" /></div>
                 <div class="text-center text-white mt-[3px] text-sm">{{ user.name }}</div>

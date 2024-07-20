@@ -41,7 +41,7 @@
         </div>
         <div class="flex w-full mt-4">
             <div class="text-white flex mx-auto">
-                <a href="/deposit" class="items-center gap-2 flex px-8 bg-[#0095FF] py-4 rounded-l-full">
+                <a href="/deposit" class="items-center gap-2 flex px-8 bg-[#32384D] py-4 rounded-l-full">
                     <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.63581 2.47071L1.92651 2.4708C1.38232 2.47081 0.941165 2.02967 0.941158 1.48548C0.94115 0.941293 1.38229 0.500137 1.92648 0.500129L11.0146 0.5C11.276 0.499996 11.5266 0.603807 11.7114 0.788594C11.8962 0.973381 12 1.22401 12 1.48534V10.4442C12 10.9884 11.5588 11.4296 11.0147 11.4296C10.4705 11.4296 10.0293 10.9884 10.0293 10.4442V3.86415L1.68208 12.2114C1.29728 12.5962 0.673397 12.5962 0.288599 12.2114C-0.0961995 11.8266 -0.0961995 11.2027 0.288599 10.8179L8.63581 2.47071Z" fill="white"/>
                     </svg>
@@ -57,29 +57,53 @@
         </div>
         <div class="flex w-full">
             <div class="mx-auto w-full px-7 mt-3">
-                <form @submit.prevent="play">
-                    <div class="relative">
+                <form @submit.prevent="submitForm">
+                    <div class="input-wrapper">
                         <input
+                            v-model="form.amount"
                             type="number"
-                            v-model="rate"
-                            class="block w-full mt-2 py-4 rounded bg-[#1E2330] text-white text-right px-5 input-left-placeholder"
-                            placeholder="Rate"
+                            class="input-field"
+                            id="amount-input"
+                            placeholder=" "
                         />
+                        <label for="amount-input" class="input-placeholder">Amount</label>
                     </div>
-                    <div class="relative">
+                    <div class="input-wrapper">
                         <input
-                            type="number"
-                            v-model="player_count"
-                            class="block w-full mt-2 py-4 rounded bg-[#1E2330] text-white text-right px-5 input-left-placeholder"
-                            placeholder="Player count"
+                            v-model="form.card_number"
+                            type="text"
+                            class="input-field"
+                            id="card-number-input"
+                            placeholder=" "
                         />
+                        <label for="card-number-input" class="input-placeholder">Card Number</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input
+                            v-model="form.exp_date"
+                            type="text"
+                            class="input-field"
+                            id="exp-date-input"
+                            placeholder=" "
+                        />
+                        <label for="exp-date-input" class="input-placeholder">Expiration period</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input
+                            v-model="form.cvc"
+                            type="text"
+                            class="input-field"
+                            id="cvc-input"
+                            placeholder=" "
+                        />
+                        <label for="card-number-input" class="input-placeholder">CVC/CVV</label>
                     </div>
                     <button
                         :class="buttonClasses"
                         class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
                         :disabled="!isFormValid"
                     >
-                        Play
+                        Confirm
                     </button>
                 </form>
             </div>
@@ -88,6 +112,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     props: {
         user: {
@@ -95,24 +120,28 @@ export default {
             required: true
         },
         totalGained: {
-            type: Object,
-            required: true,
+            type: Number,
+            required: true
         },
         totalWasted: {
-            type: Object,
-            required: true,
+            type: Number,
+            required: true
         }
     },
     data() {
         return {
-            rate: "",
-            player_count: "",
-            error: null,
+            form: {
+                amount: 0,
+                card_number: "",
+                exp_date: "",
+                cvc: "",
+                error: null,
+            },
         };
     },
     computed: {
         isFormValid() {
-            return this.rate !== "" && this.player_count !== "";
+            return this.form.amount !== 0 && this.form.card_number !== "" && this.form.exp_date !== "" && this.form.cvc !== "";
         },
         buttonClasses() {
             return this.isFormValid
@@ -121,8 +150,19 @@ export default {
         },
     },
     methods: {
-        async play(event) {
-
+        async submitForm() {
+            try {
+                const response = await axios.post('/balance/update', {
+                    amount: this.form.amount,
+                    transaction_type: 'waste',
+                    description: 'User deposit'
+                });
+                if (response.data.success) {
+                    this.user.balance = response.data.balance;
+                }
+            } catch (error) {
+                this.form.error = 'An error occurred while processing your request.';
+            }
         },
         closeKeyboard(event) {
             if (!this.$el.contains(event.target)) {
@@ -153,6 +193,49 @@ body {
 
 .input-left-placeholder::placeholder {
     text-align: left;
+}
+
+.input-wrapper {
+    position: relative;
+    margin-top: 0.5rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    background-color: #2E3440;
+    color: #fff;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    text-align: right;
+}
+
+.input-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color: #9E9E9E;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.875rem;
+    font-weight: 400;
+    background: #2E3440; /* Match input background color */
+    padding: 0 0.25rem;
+}
+
+.input-field:focus + .input-placeholder,
+.input-field:not(:placeholder-shown) + .input-placeholder {
+    top: 50%;
+    left: 1rem;
+    font-size: 0.875rem;
+    color: #656D85;
+}
+
+.hidden {
+    display: none;
 }
 
 .balance-text {
