@@ -59,7 +59,7 @@
                         <img
                             @click="triggerFileInput"
                             class="ml-auto cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-[#0095FF]"
-                            src="https://example.com/upload-icon.png"
+                            :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`"
                             alt="Upload Avatar"
                         />
                     </div>
@@ -91,7 +91,7 @@ export default {
                 email: this.user.email,
                 name: this.user.name,
                 password: '',
-                avatar_file: null, // Change from URL to file
+                avatar_file: null,
             },
             editable: false,
         };
