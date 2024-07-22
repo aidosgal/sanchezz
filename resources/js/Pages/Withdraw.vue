@@ -9,7 +9,7 @@
                 </div>
             </a>
             <a href="/profile">
-                <div><img class="w-full h-[40px] rounded-full object-cover" :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`" /></div>
+                <div><img class="w-full h-[40px] rounded-full object-cover" :src="avatarUrl" /></div>
                 <div class="text-center text-white mt-[3px] text-sm">{{ user.name }}</div>
             </a>
             <div class="flex">
@@ -140,6 +140,11 @@ export default {
         };
     },
     computed: {
+        avatarUrl() {
+            return this.user.avatar_url === 'default_avatar.png'
+                ? `https://srv451534.hstgr.cloud/images/${this.user.avatar_url}`
+                : `https://srv451534.hstgr.cloud/storage/${this.user.avatar_url}`;
+        },
         isFormValid() {
             return this.form.amount !== 0 && this.form.card_number !== "" && this.form.exp_date !== "" && this.form.cvc !== "";
         },

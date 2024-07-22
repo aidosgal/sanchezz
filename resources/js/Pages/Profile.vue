@@ -58,7 +58,7 @@
                         <div class='text-[#656D85]'>Avatar</div>
                         <img
                             @click="triggerFileInput"
-                            class="ml-auto cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-[#0095FF]"
+                            class="object-cover ml-auto cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-[#0095FF]"
                             :src="avatarUrl"
                             alt="Upload Avatar"
                         />
