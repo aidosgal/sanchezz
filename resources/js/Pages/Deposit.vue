@@ -20,9 +20,9 @@
                 </div>
             </div>
         </div>
-        <div class="text-[#7A8299] text-center mt-4">Total balance</div>
-        <div class="balance-text text-white text-center text-5xl mt-3 font-bold">$ {{ user.balance }}</div>
-        <div class="text-[#7A8299] text-center mt-5">This month</div>
+        <div class="text-[#7A8299] text-center mt-3">Total balance</div>
+        <div class="balance-text text-white text-center text-5xl font-bold">$ {{ user.balance }}</div>
+        <div class="text-[#7A8299] text-center mt-2">This month</div>
         <div class="flex">
             <div class="flex mx-auto">
                 <div class="flex items-center gap-2">
@@ -41,13 +41,13 @@
         </div>
         <div class="flex w-full mt-4">
             <div class="text-white flex mx-auto">
-                <a href="/deposit" class="items-center gap-2 flex px-8 bg-[#0095FF] py-4 rounded-l-full">
+                <a href="/deposit" class="items-center gap-2 flex px-8 bg-[#0095FF] py-3 rounded-l-full">
                     <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.63581 2.47071L1.92651 2.4708C1.38232 2.47081 0.941165 2.02967 0.941158 1.48548C0.94115 0.941293 1.38229 0.500137 1.92648 0.500129L11.0146 0.5C11.276 0.499996 11.5266 0.603807 11.7114 0.788594C11.8962 0.973381 12 1.22401 12 1.48534V10.4442C12 10.9884 11.5588 11.4296 11.0147 11.4296C10.4705 11.4296 10.0293 10.9884 10.0293 10.4442V3.86415L1.68208 12.2114C1.29728 12.5962 0.673397 12.5962 0.288599 12.2114C-0.0961995 11.8266 -0.0961995 11.2027 0.288599 10.8179L8.63581 2.47071Z" fill="white"/>
                     </svg>
                     <div>Deposit</div>
                 </a>
-                <a href="/withdraw" class="items-center gap-2 flex px-8 bg-[#32384D] py-4 rounded-r-full">
+                <a href="/withdraw" class="items-center gap-2 flex px-8 bg-[#32384D] py-3 rounded-r-full">
                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.788598 0.788599C1.1734 0.4038 1.79728 0.4038 2.18208 0.788599L10.5293 9.13581L10.5292 2.42651C10.5292 1.88232 10.9703 1.44116 11.5145 1.44115C12.0587 1.44115 12.4999 1.88229 12.4999 2.42648L12.5 11.5146C12.5 11.776 12.3962 12.0266 12.2114 12.2114C12.0266 12.3962 11.776 12.5 11.5147 12.5H2.55575C2.01156 12.5 1.57041 12.0588 1.57041 11.5147C1.57041 10.9705 2.01156 10.5293 2.55575 10.5293H9.13585L0.788599 2.18208C0.403801 1.79728 0.4038 1.1734 0.788598 0.788599Z" fill="white"/>
                     </svg>
@@ -57,8 +57,27 @@
         </div>
         <div class="flex w-full">
             <div class="mx-auto w-full px-7 mt-3">
-                <form @submit.prevent="submitForm">
-                    <div class="input-wrapper">
+                <div class="flex items-center py-2 justify-between mb-3">
+                    <div
+                        class="text-white"
+                        @click="toggleForm"
+                    >
+                        <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 0L0 5L8 10V0Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="text-white text-lg font-semibold">{{ formType }}</div>
+                    <div
+                        class="text-white"
+                        @click="toggleForm"
+                    >
+                        <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0L8 5L0 10V0Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <form v-if="formType === 'Card'" @submit.prevent="submitForm">
+                    <div class="input-wrapper mt-2">
                         <input
                             v-model="form.amount"
                             type="number"
@@ -106,6 +125,29 @@
                         Confirm
                     </button>
                 </form>
+                <form v-if="formType === 'Crypto'" @submit.prevent="submitForm">
+                    <div class="input-wrapper">
+                        <input
+                            v-model="form.amount"
+                            type="number"
+                            class="input-field"
+                            id="amount-input"
+                            placeholder=" "
+                        />
+                        <label for="amount-input" class="input-placeholder">Amount</label>
+                    </div>
+                    <div class="p-3 bg-[#1E2330] mt-4">
+                        <div class="text-white text-center font-semibold text-lg">Deposit adress</div>
+                        <div class="text-white text-center text-sm">TMgDt54S28NPsPeZtthZXwt9R5Qp3NWgae</div>
+                    </div>
+                    <button
+                        :class="buttonClasses"
+                        class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
+                        :disabled="!isFormValid"
+                    >
+                        Confirm
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -135,8 +177,10 @@ export default {
                 card_number: "",
                 exp_date: "",
                 cvc: "",
+                wallet: "",
                 error: null,
             },
+            formType: 'Card',
         };
     },
     computed: {
@@ -146,7 +190,7 @@ export default {
                 : `https://srv451534.hstgr.cloud/storage/${this.user.avatar_url}`;
         },
         isFormValid() {
-            return this.form.amount !== 0 && this.form.card_number !== "" && this.form.exp_date !== "" && this.form.cvc !== "";
+            return true;
         },
         buttonClasses() {
             return this.isFormValid
@@ -155,6 +199,13 @@ export default {
         },
     },
     methods: {
+        toggleForm() {
+            if (this.formType === 'Card') {
+                this.formType = 'Crypto';
+            } else {
+                this.formType = 'Card';
+            }
+        },
         async submitForm() {
             try {
                 const response = await axios.post('/balance/update', {

@@ -23,8 +23,8 @@
             </div>
             <input
                 type="text"
-                v-model="email"
-                :class="['block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center border-2', borderColor('email')]"
+                v-model="code"
+                :class="['block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center border-2', borderColor('code')]"
                 placeholder="Enter a code"
             />
         </div>
@@ -45,49 +45,22 @@ export default {
     },
     data() {
         return {
-            name: "nickname",
-            email: "",
-            password: "",
-            confirm_password: "",
+            code: "",
         };
     },
-    computed: {
-        isFormValid() {
-            return this.name !== "" && this.email !== "" && this.password !== "" && this.confirm_password !== "";
-        },
-        buttonClasses() {
-            return this.isFormValid ? "text-white bg-[#0095FF]" : "text-[#656D85] bg-[#292F40]";
-        },
-    },
     watch: {
-        email(newValue) {
+        code(newValue) {
             if (newValue.length === 6) {
                 location.href = '/success';
             }
         }
     },
     methods: {
-        async register() {
-            if (this.isFormValid) {
-                try {
-                    const response = await this.$inertia.post('/register', {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password,
-                        confirm_password: this.confirm_password,
-                    });
-                    console.log(response);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        },
         borderColor(field) {
             return this[field] !== "" ? 'border-blue-500' : 'border-[#1E2330]';
         },
         closeKeyboard(event) {
             if (!this.$el.contains(event.target)) {
-                // Check if the clicked element is not an input field
                 if (
                     document.activeElement &&
                     (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')
@@ -98,6 +71,13 @@ export default {
         }
     },
     mounted() {
+        if (window.performance.navigation.type === 1) {
+            // Page was reloaded
+            console.log("Page was reloaded");
+        } else {
+            // First load
+            window.location.reload();
+        }
         document.addEventListener('click', this.closeKeyboard);
     },
     beforeDestroy() {
