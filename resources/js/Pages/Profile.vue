@@ -9,7 +9,7 @@
                 </div>
             </a>
             <a href="/profile">
-                <div><img class="w-full h-[40px] rounded-full object-cover" :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`" /></div>
+                <div><img class="w-full h-[40px] rounded-full object-cover" :src="avatarUrl" /></div>
                 <div class="text-center text-white mt-[3px] text-sm">{{ user.name }}</div>
             </a>
             <div class="flex">
@@ -59,7 +59,7 @@
                         <img
                             @click="triggerFileInput"
                             class="ml-auto cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-[#0095FF]"
-                            :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`"
+                            :src="avatarUrl"
                             alt="Upload Avatar"
                         />
                     </div>
@@ -97,6 +97,11 @@ export default {
         };
     },
     computed: {
+        avatarUrl() {
+            return this.user.avatar_url === 'default_avatar.png'
+                ? `https://srv451534.hstgr.cloud/images/${this.user.avatar_url}`
+                : `https://srv451534.hstgr.cloud/storage/${this.user.avatar_url}`;
+        },
         buttonText() {
             return this.editable ? 'Confirm' : 'Change Data';
         },
@@ -212,4 +217,3 @@ body {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 </style>
-
