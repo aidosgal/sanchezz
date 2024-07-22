@@ -140,6 +140,7 @@ export default {
                 } catch (error) {
                     console.error('Error updating profile:', error);
                 }
+                location.reload();
             } else {
                 this.editable = true;
             }
