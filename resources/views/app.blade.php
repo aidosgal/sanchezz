@@ -12,7 +12,7 @@
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.expand();
                 } else {
-                    console.error('Telegram WebApp SDK not loaded.');
+                    alert('Telegram WebApp SDK not loaded.');
                 }
             }, 1000);
         });
