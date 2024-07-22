@@ -43,7 +43,7 @@
             <div v-if="Object.keys(errors).length" class="px-5 py-4 radial-gradient-bg w-full mt-3 rounded-lg">
                 <div class="text-center">Alert!</div>
                 <div v-for="(errorMessages, fieldName) in errors" :key="fieldName" class="text-center text-red-500">
-                    <div v-for="(error, index) in errorMessages" :key="index">{{ error }}</div>
+                    {{ errorMessages }}
                 </div>
             </div>
         </div>
