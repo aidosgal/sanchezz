@@ -9,7 +9,7 @@
                 </div>
             </a>
             <a href="/profile">
-                <div><img class="w-full h-[40px] rounded-full object-cover" :src="`https://srv451534.hstgr.cloud/images/${user.avatar_url}`" /></div>
+                <div><img class="w-full h-[40px] rounded-full object-cover" :src="avatarUrl" /></div>
                 <div class="text-center text-white mt-[3px] text-sm">{{ user.name }}</div>
             </a>
             <div class="flex">
@@ -20,109 +20,129 @@
                 </div>
             </div>
         </div>
-        <div class="text-[#7A8299] text-center mt-4">Total balance</div>
+        <div class="text-[#7A8299] text-center mt-4">Total earned</div>
         <div class="balance-text text-white text-center text-5xl mt-3 font-bold">$ {{ user.balance }}</div>
-        <div class="text-[#7A8299] text-center mt-5">This month</div>
-        <div class="flex">
-            <div class="flex mx-auto">
-                <div class="flex items-center gap-2">
-                    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.56497 3.5C5.86943 1.16667 6.52166 0 7.5 0C8.47835 0 9.13057 1.16667 10.435 3.5L13.3701 8.75C14.6745 11.0833 15.3268 12.25 14.8376 13.125C14.3484 14 13.044 14 10.435 14H4.56496C1.95605 14 0.651585 14 0.162413 13.125C-0.32676 12.25 0.32547 11.0833 1.62993 8.75L4.56497 3.5Z" fill="#00C0A0"/>
-                    </svg>
-                    <div class="text-white text-lg">$ {{ totalGained }}<span class="text-[#656D85]">.00</span></div>
+        <div class="max-w-md mx-auto p-5">
+            <form @submit.prevent="updateProfile">
+                <div class="input-wrapper">
+                    <input
+                        v-model="form.email"
+                        type="email"
+                        class="input-field"
+                        id="email-input"
+                        placeholder=" "
+                        :disabled="!editable"
+                    />
+                    <label for="email-input" class="input-placeholder">Email</label>
                 </div>
-                <div class="flex items-center ml-4 gap-2">
-                    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.56497 10.5C5.86943 12.8333 6.52166 14 7.5 14C8.47835 14 9.13057 12.8333 10.435 10.5L13.3701 5.25C14.6745 2.91667 15.3268 1.75 14.8376 0.874999C14.3484 -7.20488e-07 13.044 -3.9582e-07 10.435 -3.9582e-07H4.56496C1.95605 -3.9582e-07 0.651585 -7.20488e-07 0.162413 0.874999C-0.32676 1.75 0.32547 2.91667 1.62993 5.25L4.56497 10.5Z" fill="#FF4D4E"/>
-                    </svg>
-                    <div class="text-white text-lg">$ {{ totalWasted }}<span class="text-[#656D85]">.00</span></div>
+                <div class="input-wrapper">
+                    <input
+                        v-model="form.name"
+                        type="text"
+                        class="input-field"
+                        id="name-input"
+                        placeholder=" "
+                        :disabled="!editable"
+                    />
+                    <label for="name-input" class="input-placeholder">Name</label>
                 </div>
-            </div>
-        </div>
-        <div class="flex w-full mt-4">
-            <div class="text-white flex mx-auto">
-                <a href="/deposit" class="items-center gap-2 flex px-8 bg-[#0095FF] py-4 rounded-l-full">
-                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.63581 2.47071L1.92651 2.4708C1.38232 2.47081 0.941165 2.02967 0.941158 1.48548C0.94115 0.941293 1.38229 0.500137 1.92648 0.500129L11.0146 0.5C11.276 0.499996 11.5266 0.603807 11.7114 0.788594C11.8962 0.973381 12 1.22401 12 1.48534V10.4442C12 10.9884 11.5588 11.4296 11.0147 11.4296C10.4705 11.4296 10.0293 10.9884 10.0293 10.4442V3.86415L1.68208 12.2114C1.29728 12.5962 0.673397 12.5962 0.288599 12.2114C-0.0961995 11.8266 -0.0961995 11.2027 0.288599 10.8179L8.63581 2.47071Z" fill="white"/>
-                    </svg>
-                    <div>Deposit</div>
-                </a>
-                <a href="/withdraw" class="items-center gap-2 flex px-8 bg-[#8972FF] py-4 rounded-r-full">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.788598 0.788599C1.1734 0.4038 1.79728 0.4038 2.18208 0.788599L10.5293 9.13581L10.5292 2.42651C10.5292 1.88232 10.9703 1.44116 11.5145 1.44115C12.0587 1.44115 12.4999 1.88229 12.4999 2.42648L12.5 11.5146C12.5 11.776 12.3962 12.0266 12.2114 12.2114C12.0266 12.3962 11.776 12.5 11.5147 12.5H2.55575C2.01156 12.5 1.57041 12.0588 1.57041 11.5147C1.57041 10.9705 2.01156 10.5293 2.55575 10.5293H9.13585L0.788599 2.18208C0.403801 1.79728 0.4038 1.1734 0.788598 0.788599Z" fill="white"/>
-                    </svg>
-                    <div>Withdraw</div>
-                </a>
-            </div>
-        </div>
-        <div class="flex w-full">
-            <div class="mx-auto w-full px-7 mt-3">
-                <form @submit.prevent="play">
-                    <div class="relative">
-                        <input
-                            type="number"
-                            v-model="rate"
-                            class="block w-full mt-2 py-4 rounded bg-[#1E2330] text-white text-right px-5 input-left-placeholder"
-                            placeholder="Rate"
+                <div class="input-wrapper flex justify-center items-center">
+                    <input
+                        type="file"
+                        class="hidden"
+                        id="avatar-input"
+                        @change="handleFileUpload"
+                        ref="avatarInput"
+                    />
+                    <div class="flex w-full py-2 px-5 rounded-lg items-center bg-[#2E3440]">
+                        <div class='text-[#656D85]'>Avatar</div>
+                        <img
+                            @click="triggerFileInput"
+                            class="ml-auto cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-[#0095FF]"
+                            :src="avatarUrl"
+                            alt="Upload Avatar"
                         />
                     </div>
-                    <div class="relative">
-                        <input
-                            type="number"
-                            v-model="player_count"
-                            class="block w-full mt-2 py-4 rounded bg-[#1E2330] text-white text-right px-5 input-left-placeholder"
-                            placeholder="Player count"
-                        />
-                    </div>
-                    <button
-                        :class="buttonClasses"
-                        class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
-                        :disabled="!isFormValid"
-                    >
-                        Play
-                    </button>
-                </form>
-            </div>
+                </div>
+                <button
+                    :class="buttonClasses"
+                    class="block text-lg w-full py-3 font-bold mt-5 rounded-full"
+                >
+                    {{ buttonText }}
+                </button>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     props: {
         user: {
             type: Object,
             required: true
-        },
-        totalGained: {
-            type: Object,
-            required: true,
-        },
-        totalWasted: {
-            type: Object,
-            required: true,
         }
     },
     data() {
         return {
-            rate: "",
-            player_count: "",
-            error: null,
+            form: {
+                email: this.user.email,
+                name: this.user.name,
+                password: '',
+                avatar_file: null,
+            },
+            editable: false,
         };
     },
     computed: {
-        isFormValid() {
-            return this.rate !== "" && this.player_count !== "";
+        avatarUrl() {
+            return this.user.avatar_url === 'default_avatar.png'
+                ? `https://srv451534.hstgr.cloud/images/${this.user.avatar_url}`
+                : `https://srv451534.hstgr.cloud/storage/${this.user.avatar_url}`;
+        },
+        buttonText() {
+            return this.editable ? 'Confirm' : 'Change Data';
         },
         buttonClasses() {
-            return this.isFormValid
-                ? "text-white bg-[#0095FF]"
-                : "text-[#656D85] bg-[#292F40]";
-        },
+            return this.editable
+                ? 'text-white bg-[#0095FF]'
+                : 'text-[#656D85] bg-[#292F40]';
+        }
     },
     methods: {
-        async play(event) {
+        triggerFileInput() {
+            this.$refs.avatarInput.click();
+        },
+        handleFileUpload(event) {
+            this.form.avatar_file = event.target.files[0];
+        },
+        async updateProfile() {
+            if (this.editable) {
+                const formData = new FormData();
+                formData.append('email', this.form.email);
+                formData.append('name', this.form.name);
+                if (this.form.password) {
+                    formData.append('password', this.form.password);
+                }
+                if (this.form.avatar_file) {
+                    formData.append('avatar_url', this.form.avatar_file);
+                }
 
+                try {
+                    await axios.post('/update', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                    this.editable = false;
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                }
+            } else {
+                this.editable = true;
+            }
         },
         closeKeyboard(event) {
             if (!this.$el.contains(event.target)) {
