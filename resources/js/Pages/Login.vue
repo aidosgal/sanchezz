@@ -16,13 +16,13 @@
                 <input
                     type="text"
                     v-model="email"
-                    class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
+                    :class="['block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center border-2', borderColor('email')]"
                     placeholder="Email"
                 />
                 <input
                     type="password"
                     v-model="password"
-                    class="block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center"
+                    :class="['block w-full mt-5 py-4 rounded bg-[#1E2330] text-white text-center border-2', borderColor('password')]"
                     placeholder="Password"
                 />
                 <a
@@ -91,6 +91,9 @@ export default {
                 });
             }
         },
+        borderColor(field) {
+            return this[field] !== "" ? 'border-blue-500' : 'border-[#1E2330]';
+        },
         closeKeyboard(event) {
             if (!this.$el.contains(event.target)) {
                 if (
@@ -123,3 +126,4 @@ body {
     background: radial-gradient(circle, #5E001F 0%, #402937 100%);
 }
 </style>
+
