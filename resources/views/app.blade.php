@@ -8,10 +8,13 @@
     @inertiaHead
     <script>
         window.addEventListener('load', () => {
-            if (window.Telegram && window.Telegram.WebApp) {
-                // Expand the Web App to the maximum available height
-                window.Telegram.WebApp.expand();
-            }
+            setTimeout(() => {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.expand();
+                } else {
+                    console.error('Telegram WebApp SDK not loaded.');
+                }
+            }, 1000);
         });
     </script>
   </head>
