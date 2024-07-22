@@ -19,7 +19,7 @@ class Handler extends WebhookHandler
             Telegraph::chat($chat)
                 ->message('Добро пожаловать!')
                 ->keyboard(Keyboard::make()->buttons([
-                    Button::make('Открыть приложение')->webApp('https://srv451534.hstgr.cloud')->requestWriteAccess(true),
+                    Button::make('Открыть приложение')->webApp('https://srv451534.hstgr.cloud'),
                 ]))
                 ->send();
         } else {
