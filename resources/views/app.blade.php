@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     @inertiaHead
     <script>
+        alert("hello");
         window.addEventListener('load', () => {
             setTimeout(() => {
                 if (window.Telegram && window.Telegram.WebApp) {
