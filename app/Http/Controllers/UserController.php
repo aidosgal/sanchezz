@@ -39,6 +39,16 @@ class UserController extends Controller
         return Inertia::render('Register');
     }
 
+    public function confirm_page(): mixed
+    {
+        return Inertia::render('ConfirmEmail');
+    }
+
+    public function success_page(): mixed
+    {
+        return Inertia::render('SuccesfullConfirm');
+    }
+
     public function create(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -60,7 +70,7 @@ class UserController extends Controller
 
             Auth::login($user);
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/confirm');
         }
 
         return back()->withErrors(['confirm_password' => 'Passwords do not match.']);

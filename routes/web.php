@@ -23,6 +23,8 @@ Route::post('/login', [UserController::class, 'authenticate']);
 
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'create']);
+Route::get('/confirm', [UserController::class, 'confirm_page']);
+Route::get('/success', [UserController::class, 'success_page']);
 
 Route::get('logout', [UserController::class, 'logout']);
 
