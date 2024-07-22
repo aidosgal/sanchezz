@@ -102,5 +102,12 @@ class UserController extends Controller
 
         return redirect()->route('profile')->with('success', 'Profile updated successfully.');
     }
+
+    public function logout(): RedirectResponse
+    {
+        Auth::logout();
+
+        return redirect()->intended('/');
+    }
 }
 

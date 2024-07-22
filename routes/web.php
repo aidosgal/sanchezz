@@ -24,6 +24,8 @@ Route::post('/login', [UserController::class, 'authenticate']);
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'create']);
 
+Route::get('logout', [UserController::class, 'logout']);
+
 Route::get('/profile', [UserController::class, 'profile'])->name('profile')->middleware('auth');
 Route::post('/update', [UserController::class, 'update'])->name('profile.update')->middleware('auth');
 

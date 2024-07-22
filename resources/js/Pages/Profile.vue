@@ -71,6 +71,12 @@
                     {{ buttonText }}
                 </button>
             </form>
+            <button
+                @click="logout"
+                class="text-white w-full text-center py-3 bg-[#CC2944] mt-5 rounded"
+            >
+                Exit account
+            </button>
         </div>
     </div>
 </template>
@@ -117,6 +123,14 @@ export default {
         },
         handleFileUpload(event) {
             this.form.avatar_file = event.target.files[0];
+        },
+        async logout(){
+            try {
+                await axios.get('/logout');
+                location.href = "/";
+            } catch (error) {
+                console.error('Error logout profile:', error);
+            }
         },
         async updateProfile() {
             if (this.editable) {
